@@ -64,7 +64,11 @@ def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: St
     return
 
   if preset.name not in getattr(app.state, 'loaded_loras', set()):
-    pipeline.load_lora_weights(preset.lora_repo, adapter_name=preset.name)
+    pipeline.load_lora_weights(
+      preset.lora_repo,
+      adapter_name=preset.name,
+      weight_name=preset.lora_weight_name,
+    )
     app.state.loaded_loras.add(preset.name)
 
   pipeline.set_adapters([preset.name], adapter_weights=[preset.lora_weight])

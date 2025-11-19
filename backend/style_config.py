@@ -10,6 +10,7 @@ class StylePreset:
   negative_prompt: str
   lora_repo: str | None = None
   lora_weight: float = 0.6
+  lora_weight_name: str | None = None
 
 
 STYLE_PRESETS: dict[str, StylePreset] = {
@@ -19,6 +20,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     negative_prompt='grainy, noisy, distorted, low resolution, dull colors, ugly, deformed, watermark, text',
     lora_repo='twn39/Ghibli_xl_v2',
     lora_weight=0.65,
+    lora_weight_name='Ghibli_xl_v2.safetensors',
   ),
   'naruto': StylePreset(
     name='Naruto Manga',
