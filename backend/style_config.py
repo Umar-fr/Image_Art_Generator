@@ -17,7 +17,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     name='Studio Ghibli',
     prompt='Studio Ghibli concept art, whimsical, painterly, soft lighting, high detail',
     negative_prompt='grainy, noisy, distorted, low resolution, dull colors, ugly, deformed, watermark, text',
-    lora_repo='KBlueLeaf/kohaku-XL-ZavyChromaGhibli',
+    lora_repo='twn39/Ghibli_xl_v2',
     lora_weight=0.65,
   ),
   'naruto': StylePreset(
