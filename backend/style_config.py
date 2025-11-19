@@ -26,26 +26,29 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     name='Naruto Manga',
     prompt='Naruto manga panel, bold ink, high energy, shonen jump, cel shading, speed lines',
     negative_prompt='photorealistic, blurry, washed out colors, realistic lighting, low detail, text',
-    lora_repo='pixosg/HunyuanImage-3.0-Naruto-Style-Adapter',
+    lora_repo='shawn323/sd-xl-lora-naruto',
+    lora_weight_name='pytorch_lora_weights.safetensors',
   ),
   'dragonball': StylePreset(
     name='Dragon Ball Z',
     prompt='Dragon Ball Z anime still, bold outlines, saturated colors, kinetic motion, akira toriyama style',
     negative_prompt='painterly, watercolor, muted tones, noise, low detail, soft focus, text',
-    lora_repo='lora-library/dragon-ball-wufan',
+    lora_repo=None,
   ),
   'picasso': StylePreset(
     name='Picasso Cubism',
     prompt='Picasso cubist portrait, angular geometry, abstract forms, bold color blocking, overlapping perspective',
     negative_prompt='photorealistic, soft lighting, smooth shading, realistic proportions, text',
-    lora_repo='aipicasso/picasso-diffusion-1-1',
+    lora_repo='bzcasper/pablo_picasso_SDXL_image-lora',
+    lora_weight_name='pablo_picasso_SDXL_image.safetensors',
   ),
   'davinci': StylePreset(
     name='Da Vinci Sketch',
     prompt='Leonardo da Vinci charcoal sketch, sfumato shading, renaissance study, parchment background, precise anatomy',
     negative_prompt='bright colors, comic style, digital artifacts, sharp modern lines, text',
-    lora_repo='DaVinciCode/doctra-docres-main',
+    lora_repo='Jonjew/LeonardoDaVinciPortraitPaintingStyle',
     lora_weight=0.5,
+    lora_weight_name='davinci1_cap_d6a3e12.safetensors',
   ),
 }
 
