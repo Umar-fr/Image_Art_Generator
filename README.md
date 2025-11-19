@@ -106,8 +106,7 @@ Tips:
 - Deployment proof: Netlify/Vercel URL + Cloudflare tunnel log.
 - Notebook: export executed Colab notebook (File > Download > .ipynb) for submission.
 
-## Next Steps / Enhancements
-- Add ControlNet or IP-Adapter to better preserve poses.
-- Queue jobs and return status updates if you expect multiple users.
-- Persist generated art to Firebase or Supabase (still free tiers).
-- Train your own LoRA for custom campus styles and add to `style_config.py`.
+## How to run:
+- `Local Machine`: git add . -> git commit -m "FIX" -> git push
+- `Open google colab`: first paste this in the top cells: `!rm -rf /content/art-style-transfer` `!git clone https://github.com/Umar-fr/Image_Art_Generator /content/art-style-transfer` change thr runtime type to T4 GPU, and run all cells and copy the tunnel url and paste it to the local machine .env and push the code again.
+- `Vercel`: Open vercel and paste the Tunnel url in environment variables and deploy the frontend.

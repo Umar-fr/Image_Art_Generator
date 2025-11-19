@@ -60,40 +60,29 @@ def warm_pipeline():
 
 def _disable_all_loras(pipeline: StableDiffusionXLImg2ImgPipeline):
   if hasattr(pipeline, 'disable_lora_adapters'):
-    try:
-      pipeline.disable_lora_adapters()
-    except (AttributeError, ValueError, RuntimeError):
-      pass
+    pipeline.disable_lora_adapters()
     return
 
   try:
-    active_adapters = getattr(pipeline, 'active_adapters', [])
-    if active_adapters:
-      pipeline.set_adapters([], adapter_weights=[])
-  except (TypeError, AttributeError, ValueError, RuntimeError):
-    try:
-      pipeline.set_adapters([])
-    except (AttributeError, ValueError, RuntimeError):
-      pass
+    pipeline.set_adapters([], adapter_weights=[])
+  except TypeError:
+    pipeline.set_adapters([])
 
 
-def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: StylePreset, style_key: str):
+def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: StylePreset):
   if not preset.lora_repo:
     _disable_all_loras(pipeline)
     return
 
-  # Use style_key (e.g., 'davinci', 'ghibli') as adapter name to avoid conflicts and spaces
-  adapter_name = style_key
-
-  if adapter_name not in getattr(app.state, 'loaded_loras', set()):
+  if preset.name not in getattr(app.state, 'loaded_loras', set()):
     pipeline.load_lora_weights(
       preset.lora_repo,
-      adapter_name=adapter_name,
+      adapter_name=preset.name,
       weight_name=preset.lora_weight_name,
     )
-    app.state.loaded_loras.add(adapter_name)
+    app.state.loaded_loras.add(preset.name)
 
-  pipeline.set_adapters([adapter_name], adapter_weights=[preset.lora_weight])
+  pipeline.set_adapters([preset.name], adapter_weights=[preset.lora_weight])
 
 
 def _image_bytes_to_pil(image_bytes: bytes) -> Image.Image:
@@ -134,7 +123,7 @@ async def stylize(
   pipeline: StableDiffusionXLImg2ImgPipeline = app.state.pipeline
 
   try:
-    _apply_lora_if_needed(pipeline, preset, style)
+    _apply_lora_if_needed(pipeline, preset)
 
     generator = torch.Generator(device=DEVICE)
     if seed is not None:
