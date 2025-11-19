@@ -76,7 +76,7 @@ function App() {
       <header className="page__header">
         <div>
           <p className="eyebrow">Zero-cost art stylization pipeline</p>
-          <h1>DreamForge Studio</h1>
+          <h1>Rot Studio</h1>
           <p className="lede">
             Upload a reference photo, pick a preset, and let the Colab backend remaster it using
             open-source diffusion checkpoints.
