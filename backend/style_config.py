@@ -11,6 +11,7 @@ class StylePreset:
   lora_repo: str | None = None
   lora_weight: float = 0.6
   lora_weight_name: str | None = None
+  adapter_key: str | None = None
 
 
 STYLE_PRESETS: dict[str, StylePreset] = {
@@ -21,6 +22,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     lora_repo='twn39/Ghibli_xl_v2',
     lora_weight=0.65,
     lora_weight_name='Ghibli_xl_v2.safetensors',
+    adapter_key='ghibli',
   ),
   'naruto': StylePreset(
     name='Naruto Manga',
@@ -28,6 +30,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     negative_prompt='photorealistic, blurry, washed out colors, realistic lighting, low detail, text',
     lora_repo='shawn323/sd-xl-lora-naruto',
     lora_weight_name='pytorch_lora_weights.safetensors',
+    adapter_key='naruto',
   ),
   'dragonball': StylePreset(
     name='Dragon Ball Z',
@@ -41,6 +44,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     negative_prompt='photorealistic, soft lighting, smooth shading, realistic proportions, text',
     lora_repo='bzcasper/pablo_picasso_SDXL_image-lora',
     lora_weight_name='pablo_picasso_SDXL_image.safetensors',
+    adapter_key='picasso',
   ),
   'davinci': StylePreset(
     name='Da Vinci Sketch',
@@ -49,6 +53,7 @@ STYLE_PRESETS: dict[str, StylePreset] = {
     lora_repo='Jonjew/LeonardoDaVinciPortraitPaintingStyle',
     lora_weight=0.5,
     lora_weight_name='davinci1_cap_d6a3e12.safetensors',
+    adapter_key='davinci',
   ),
 }
 

@@ -74,15 +74,19 @@ def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: St
     _disable_all_loras(pipeline)
     return
 
-  if preset.name not in getattr(app.state, 'loaded_loras', set()):
+  adapter_name = preset.adapter_key or preset.name
+
+  loaded = getattr(app.state, 'loaded_loras', set())
+
+  if adapter_name not in loaded:
     pipeline.load_lora_weights(
       preset.lora_repo,
-      adapter_name=preset.name,
+      adapter_name=adapter_name,
       weight_name=preset.lora_weight_name,
     )
-    app.state.loaded_loras.add(preset.name)
+    loaded.add(adapter_name)
 
-  pipeline.set_adapters([preset.name], adapter_weights=[preset.lora_weight])
+  pipeline.set_adapters([adapter_name], adapter_weights=[preset.lora_weight])
 
 
 def _image_bytes_to_pil(image_bytes: bytes) -> Image.Image:
