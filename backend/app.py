@@ -55,13 +55,18 @@ def _load_pipeline() -> StableDiffusionXLImg2ImgPipeline:
 @app.on_event('startup')
 def warm_pipeline():
   app.state.pipeline = _load_pipeline()
+  app.state.loaded_loras = set()
 
 
 def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: StylePreset):
   if not preset.lora_repo:
+    pipeline.disable_lora_adapters()
     return
 
-  pipeline.load_lora_weights(preset.lora_repo, adapter_name=preset.name)
+  if preset.name not in getattr(app.state, 'loaded_loras', set()):
+    pipeline.load_lora_weights(preset.lora_repo, adapter_name=preset.name)
+    app.state.loaded_loras.add(preset.name)
+
   pipeline.set_adapters([preset.name], adapter_weights=[preset.lora_weight])
 
 
@@ -102,20 +107,23 @@ async def stylize(
   init_image = _image_bytes_to_pil(contents)
   pipeline: StableDiffusionXLImg2ImgPipeline = app.state.pipeline
 
-  _apply_lora_if_needed(pipeline, preset)
+  try:
+    _apply_lora_if_needed(pipeline, preset)
 
-  generator = torch.Generator(device=DEVICE)
-  if seed is not None:
-    generator = generator.manual_seed(int(seed))
+    generator = torch.Generator(device=DEVICE)
+    if seed is not None:
+      generator = generator.manual_seed(int(seed))
 
-  result = pipeline(
-    prompt=preset.prompt,
-    negative_prompt=preset.negative_prompt,
-    image=init_image,
-    strength=float(strength),
-    guidance_scale=float(guidance_scale),
-    generator=generator,
-  )
+    result = pipeline(
+      prompt=preset.prompt,
+      negative_prompt=preset.negative_prompt,
+      image=init_image,
+      strength=float(strength),
+      guidance_scale=float(guidance_scale),
+      generator=generator,
+    )
+  except Exception as exc:  # pylint: disable=broad-except
+    raise HTTPException(500, detail=f'Stylization failed: {exc}') from exc
 
   base64_image = _pil_to_base64(result.images[0])
   return {
