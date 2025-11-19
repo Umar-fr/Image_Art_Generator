@@ -58,9 +58,20 @@ def warm_pipeline():
   app.state.loaded_loras = set()
 
 
+def _disable_all_loras(pipeline: StableDiffusionXLImg2ImgPipeline):
+  if hasattr(pipeline, 'disable_lora_adapters'):
+    pipeline.disable_lora_adapters()
+    return
+
+  try:
+    pipeline.set_adapters([], adapter_weights=[])
+  except TypeError:
+    pipeline.set_adapters([])
+
+
 def _apply_lora_if_needed(pipeline: StableDiffusionXLImg2ImgPipeline, preset: StylePreset):
   if not preset.lora_repo:
-    pipeline.disable_lora_adapters()
+    _disable_all_loras(pipeline)
     return
 
   if preset.name not in getattr(app.state, 'loaded_loras', set()):
