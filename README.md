@@ -1,4 +1,4 @@
-# DreamForge Studio - AI Art Style Transfer
+# Rot Studio - AI Art Style Transfer
 
 End-to-end project for a 7th-semester B.Tech CSE (AI) submission. Users upload a photo, pick an art preset (Ghibli, Naruto, Dragon Ball, Picasso, Da Vinci, etc.), and get a stylized image generated on a zero-cost stack (React + Vite frontend, FastAPI + SDXL backend on Google Colab + Cloudflare Tunnel).
 
