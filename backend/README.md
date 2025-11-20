@@ -1,4 +1,4 @@
-# DreamForge Backend (FastAPI + Diffusers)
+# Rot Studio Backend (FastAPI + Diffusers)
 
 This backend is designed to run on **Google Colab (free tier)** or any local GPU. It exposes a single `/stylize` endpoint that the React frontend calls to convert user-uploaded photos into stylized artwork using Stable Diffusion XL + style-specific LoRA adapters.
 
