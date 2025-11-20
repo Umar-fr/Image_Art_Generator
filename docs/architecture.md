@@ -1,4 +1,4 @@
-# DreamForge Studio – Architecture & Workflow
+# Rot Studio – Architecture & Workflow
 
 ## Goal
 Turn a user-provided portrait into stylized artwork (Ghibli, Naruto, Dragon Ball, Picasso, Da Vinci, etc.) using open-source diffusion checkpoints, entirely on zero-cost infrastructure (Colab GPU + free hosting).
