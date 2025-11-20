@@ -1,6 +1,6 @@
 fastapi==0.115.2
 uvicorn[standard]==0.30.6
-torch==2.8.0
+torch==2.4.1
 torchvision==0.19.1
 diffusers==0.30.3
 transformers==4.45.2
