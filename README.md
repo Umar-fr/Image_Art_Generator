@@ -1,6 +1,6 @@
 # Rot Studio - AI Art Style Transfer
 
-End-to-end project for a 7th-semester B.Tech CSE (AI) submission. Users upload a photo, pick an art preset (Ghibli, Naruto, Dragon Ball, Picasso, Da Vinci, etc.), and get a stylized image generated on a zero-cost stack (React + Vite frontend, FastAPI + SDXL backend on Google Colab + Cloudflare Tunnel).
+End-to-end project for a 7th-semester B.Tech CSE (AI) submission. Users upload a photo, pick an art preset (Ghibli, Naruto, Dragon Ball, Picasso, Da Vinci, etc.), and get a stylized image generated on a zero-cost stack (React + Vite frontend, FastAPI + SDXL backend on Hugging Face Spaces).
 
 ## Repository Layout
 
@@ -53,16 +53,26 @@ pip install -r requirements.txt
 uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Zero-cost Colab deployment:
+Hugging Face Spaces Deployment (Free GPU):
 
-1. Open `notebooks/colab_backend.ipynb` in Google Colab.
-2. Upload (or git clone) this repo into `/content`.
-3. Switch runtime to GPU, run cells top-to-bottom:
-   - install dependencies
-   - (optional) login to HuggingFace for gated LoRA checkpoints
-   - start Uvicorn server
-   - run Cloudflare tunnel and copy the public URL
-4. Paste the printed URL into `frontend/.env` (`VITE_API_BASE_URL`), restart `npm run dev`, and test.
+1. **Create a Hugging Face Account**: If you don't have one, sign up at [huggingface.co](https://huggingface.co/).
+2. **Create a New Space**:
+   - Go to your profile and click **New Space**.
+   - Give it a name (e.g., `rot-studio-backend`).
+   - Select **Docker** as the Space SDK.
+   - Choose the **NVIDIA T4 Small** hardware for a free GPU.
+   - Under **Space secrets**, add a secret named `HUGGING_FACE_HUB_TOKEN` with your Hugging Face Hub token as the value. This is needed for downloading models.
+   - Click **Create Space**.
+3. **Push the Backend to the Space**:
+   - The repository will be created empty. Follow the instructions on the Space page to clone it, then copy the contents of the `backend/` directory (`app.py`, `requirements.txt`, etc.) into the root of your new Space repository and push.
+   - Make sure the `backend/` directory contains `app.py`, `requirements.txt`, `style_config.py`, and the new `README.md` with the Hugging Face metadata.
+4. **Get the Public URL**: Once the build is complete, the Space will have a public URL (e.g., `https://<your-username>-<space-name>.hf.space`). This is your new backend endpoint.
+5. **Update the Frontend**:
+   - In the `frontend/` directory, update the `.env.local` file with the new URL:
+     ```
+     VITE_API_BASE_URL=https://<your-username>-<space-name>.hf.space
+     ```
+   - Re-deploy your frontend.
 
 ### API Contract
 
@@ -86,27 +96,9 @@ Response:
 }
 ```
 
-## Deployment (All Free)
-
-| Layer | Service | Steps |
-| --- | --- | --- |
-| Frontend | Netlify/Vercel/Cloudflare Pages | Connect repo -> set build command `npm run build` -> output `dist`. |
-| Backend | Google Colab + Cloudflare Tunnel | Run the notebook -> keep browser tab open during demos. |
-| Domain | Optional custom domain | Point CNAME to Netlify/Vercel (still free). |
-
-Tips:
-- Run Colab notebook shortly before demo to avoid idle timeouts.
-- Keep tunnel URL secret; disable the tunnel after showcasing.
-- Capture demo screenshots for the project report.
-
 ## Project Report Checklist
 - Source code (this repo)
 - Architecture diagram + explanation (`docs/architecture.md`)
 - Test evidence: include screenshots of each preset result, plus a health-check response.
-- Deployment proof: Netlify/Vercel URL + Cloudflare tunnel log.
-- Notebook: export executed Colab notebook (File > Download > .ipynb) for submission.
-
-## How to run:
-- `Local Machine`: git add . -> git commit -m "FIX" -> git push
-- `Open google colab`: first paste this in the top cells: `!rm -rf /content/art-style-transfer` `!git clone https://github.com/Umar-fr/Image_Art_Generator /content/art-style-transfer` change thr runtime type to T4 GPU, and run all cells and copy the tunnel url and paste it to the local machine .env and push the code again.
-- `Vercel`: Open vercel and paste the Tunnel url in environment variables and deploy the frontend.
+- Deployment proof: Netlify/Vercel URL + your Hugging Face Space URL.
+- Notebook: export executed Colab notebook (File > Download > .ipynb) for submission (if you still need it for your report).
