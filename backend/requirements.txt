@@ -1,11 +1,17 @@
+# Web backend
 fastapi==0.115.2
 uvicorn[standard]==0.30.6
-torch==2.4.1
-torchvision==0.19.1
-diffusers==0.30.3
-transformers==4.45.2
-accelerate==0.34.2
-safetensors==0.4.5
-Pillow==10.4.0
 python-multipart==0.0.9
 
+# Core ML
+torch==2.4.1
+torchvision==0.19.1
+
+# Hugging Face ecosystem (COMPATIBLE)
+diffusers==0.29.2
+transformers==4.41.2
+accelerate==0.33.0
+safetensors==0.4.5
+
+# Image handling
+Pillow==10.4.0
