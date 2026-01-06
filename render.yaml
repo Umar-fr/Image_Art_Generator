@@ -4,6 +4,10 @@ services:
     env: python
     region: oregon
     plan: free
-    buildCommand: "pip install -r backend/requirements.txt"
+
+    # 🔑 THIS IS THE IMPORTANT FIX
+    pythonVersion: 3.11.9
+
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn app:app --host 0.0.0.0 --port $PORT"
     cwd: backend
