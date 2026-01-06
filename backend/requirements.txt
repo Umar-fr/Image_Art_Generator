@@ -3,9 +3,9 @@ fastapi==0.115.2
 uvicorn[standard]==0.30.6
 python-multipart==0.0.9
 
-# PyTorch (Python 3.13 compatible)
+# PyTorch stack (Python 3.13 compatible)
 torch==2.5.1
-torchvision==0.20.1
+torchvision==0.21.0
 
 # Hugging Face ecosystem (Python 3.13 compatible)
 diffusers==0.30.3
