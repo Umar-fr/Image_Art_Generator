@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: rot-pg-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "uvicorn app:app --host 0.0.0.0 --port $PORT"
+    cwd: backend

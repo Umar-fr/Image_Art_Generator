@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import './App.css'
-import { STYLE_PRESETS, getStyleById } from './data/stylePresets'
+import { stylePresets as STYLE_PRESETS } from './data/stylePresets'
+
+const getStyleById = (id) => STYLE_PRESETS.find((s) => s.id === id)
 import { UploadZone } from './components/UploadZone'
 import { StyleSelector } from './components/StyleSelector'
 import { ResultPane } from './components/ResultPane'
@@ -13,8 +15,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [resultUrl, setResultUrl] = useState('')
-  const [strength, setStrength] = useState(0.65)
-  const [guidance, setGuidance] = useState(7)
+  const [strength, setStrength] = useState(0.5)
+  const [guidance, setGuidance] = useState(0.0)
 
   const previewUrl = useImagePreview(file)
   const activeStyle = useMemo(() => getStyleById(style), [style])
@@ -97,20 +99,20 @@ function App() {
               <span>Strength: {strength.toFixed(2)}</span>
               <input
                 type="range"
-                min="0.2"
-                max="0.95"
+                min="0.0"
+                max="1.0"
                 step="0.01"
                 value={strength}
                 onChange={(event) => setStrength(Number(event.target.value))}
               />
             </label>
             <label>
-              <span>Guidance: {guidance.toFixed(1)}</span>
+              <span>Guidance: {guidance.toFixed(2)}</span>
               <input
                 type="range"
-                min="3"
-                max="12"
-                step="0.1"
+                min="0.0"
+                max="1.0"
+                step="0.01"
                 value={guidance}
                 onChange={(event) => setGuidance(Number(event.target.value))}
               />
