@@ -1,4 +1,4 @@
-# Rot PG - AI Art Style Transfer
+# Rot Studio - AI Art Style Transfer
 
 This project allows users to upload a photo, pick an art style, and generate a stylized image using a CPU-optimized AI model. The application is built with a React + Vite frontend and a FastAPI backend, designed for a zero-cost deployment on Render.
 
